@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'Screens/SignUp.dart';
-void main() {
+import 'Screens/SignIn.dart';
+
+void main(){
   runApp(const MyApp());
 }
 

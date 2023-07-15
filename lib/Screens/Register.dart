@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -424,9 +425,8 @@ class _RegisterState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 231,
                       child: Text(
-                          "Company Logo (in jpeg, jpg, png)",
+                          "GST",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
@@ -436,45 +436,53 @@ class _RegisterState extends State<RegisterPage> {
                     Row(
                       children: [
                         Container(
-                          child: ElevatedButton(
-                            onPressed: (){
+                          width:150,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: ElevatedButton(
+                                  onPressed: (){
 
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green, // Change the button color here
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5), // Change the border radius here
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.green, // Change the button color here
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5), // Change the border radius here
+                                    ),
+                                  ),
+                                  child: Text(
+                                      "Yes",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      )
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: Text(
-                                "Upload",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                )
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: ElevatedButton(
-                            onPressed: (){
+                              Container(
+                                child: ElevatedButton(
+                                  onPressed: (){
 
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green, // Change the button color here
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5), // Change the border radius here
-                              ),
-                            ),
-                            child: Text(
-                                "Upload",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                )
-                            ),
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.green, // Change the button color here
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5), // Change the border radius here
+                                    ),
+                                  ),
+                                  child: Text(
+                                      "No",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      )
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         )
                       ],
@@ -544,6 +552,25 @@ class _RegisterState extends State<RegisterPage> {
                       ),
                     )
                   ],
+                ),
+                ElevatedButton(
+                  onPressed: (){
+
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green, // Change the button color here
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5), // Change the border radius here
+                    ),
+                  ),
+                  child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      )
+                  ),
                 ),
               ],)
     ],
