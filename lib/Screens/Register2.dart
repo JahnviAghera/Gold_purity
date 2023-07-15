@@ -1,14 +1,58 @@
 import 'package:flutter/material.dart';
-import 'Register2.dart';
+import 'package:mysql1/mysql1.dart';
+import 'Register.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class RegisterPage2 extends StatefulWidget {
+  const RegisterPage2({Key? key}) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpState();
+  State<RegisterPage2> createState() => _RegisterState2();
 }
 
-class _SignUpState extends State<SignUpPage> {
+class _RegisterState2 extends State<RegisterPage2> {
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirm_password = TextEditingController();
+
+  void handleContinueButtonPressed() {
+    String enteredEmail = email.text;
+    String enteredPassword = password.text;
+    String enteredConfirmPassword = confirm_password.text;
+
+    if (enteredPassword == enteredConfirmPassword) {
+      // Password and confirmation match, navigate to Registration page
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RegisterPage(
+            email: enteredEmail,
+            password: enteredPassword,
+          ),
+        ),
+      );
+    } else {
+      // Password and confirmation do not match, show an error message
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Password and Confirm Password do not match.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -38,7 +82,7 @@ class _SignUpState extends State<SignUpPage> {
               child: Center(
                 child: Align(
                   child: Text(
-                    "Udhyog 4.0 (U4) is a start-up initiation by professionals in 2019, and mainly provides technological solutions related to emerging technologies such as Industry 4.0. This in turn transforms existing industrial setups into SMART and sustainable manufacturing setups.",
+                    "Udhyog 4.0 (U4) is a start-up initiation by professionals in 2019, and mainly provides technological solutions related to emerging technologies such as Industry 4.0. This in turn transform existing industrial setup into SMART and sustainable manufacturing setup.",
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
@@ -55,6 +99,7 @@ class _SignUpState extends State<SignUpPage> {
               child: Column(
                 children: [
                   TextField(
+                    controller: email,
                     decoration: InputDecoration(
                       hintText: 'User Name',
                       border: OutlineInputBorder(
@@ -68,6 +113,7 @@ class _SignUpState extends State<SignUpPage> {
                     height: 23,
                   ),
                   TextField(
+                    controller: password,
                     decoration: InputDecoration(
                       hintText: 'Password',
                       border: OutlineInputBorder(
@@ -80,18 +126,27 @@ class _SignUpState extends State<SignUpPage> {
                   SizedBox(
                     height: 23,
                   ),
+                  TextField(
+                    controller: confirm_password,
+                    decoration: InputDecoration(
+                      hintText: 'Confirm Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
+                      prefixIcon: Icon(Icons.lock),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 23,
+                  ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         width: 150,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => RegisterPage2()),
-                            );
-                          },
+                          onPressed: handleContinueButtonPressed,
                           style: ElevatedButton.styleFrom(
                             primary: Colors.green,
                             shape: RoundedRectangleBorder(
@@ -99,27 +154,7 @@ class _SignUpState extends State<SignUpPage> {
                             ),
                           ),
                           child: Text(
-                            'Register',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 150,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Button action
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.green,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          child: Text(
-                            'Login',
+                            'Continue',
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -127,18 +162,6 @@ class _SignUpState extends State<SignUpPage> {
                         ),
                       ),
                     ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Forgot Password",
-                      style: TextStyle(
-                        color: Colors.green,
-                      ),
-                    ),
                   ),
                 ],
               ),
