@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'Register.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage2 extends StatefulWidget {
   const RegisterPage2({Key? key}) : super(key: key);
@@ -13,7 +15,35 @@ class _RegisterState2 extends State<RegisterPage2> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController confirm_password = TextEditingController();
-
+  Future<void> addData() async {
+    final conn = await MySqlConnection.connect(ConnectionSettings(
+      host: '10.0.2.2',
+      port: 3306,
+      user: 'root',
+      db: 'testdb',
+    ));
+    final Results result = await conn.query(
+      'SELECT id FROM users WHERE email = ?',
+      [email.text],
+    );
+    if (result.isNotEmpty) {
+      // showCustomToast();
+      print('An account with this email already exists.');
+      //TODO: add a error showing text (account exists)
+      return; // Exit the function if account already exists
+    }else{
+      handleContinueButtonPressed();
+    }
+  }
+  void showCustomToast() {
+    Fluttertoast.showToast(
+      msg: 'An account with this email already exists.',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.grey[700],
+      textColor: Colors.white,
+    );
+  }
   void handleContinueButtonPressed() {
     String enteredEmail = email.text;
     String enteredPassword = password.text;
@@ -146,7 +176,7 @@ class _RegisterState2 extends State<RegisterPage2> {
                       Container(
                         width: 150,
                         child: ElevatedButton(
-                          onPressed: handleContinueButtonPressed,
+                          onPressed: addData,
                           style: ElevatedButton.styleFrom(
                             primary: Colors.green,
                             shape: RoundedRectangleBorder(

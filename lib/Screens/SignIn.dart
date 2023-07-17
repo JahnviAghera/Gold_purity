@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
+import 'Main_page.dart';
 import 'Register2.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -9,6 +11,48 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUpPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Function to handle login button press
+  Future<void> _handleLogin() async {
+    // Database connection configuration
+    final conn = await MySqlConnection.connect(ConnectionSettings(
+      host: '10.0.2.2',
+      port: 3306,
+      user: 'root',
+      db: 'testdb',
+    ));
+
+    try {
+      final Results result = await conn.query(
+        'SELECT * FROM users WHERE email = ? AND password = ?',
+        [_usernameController.text, _passwordController.text],
+      );
+
+      if (result.isNotEmpty) {
+        // User credentials are valid, perform login action
+        print('Login successful!');
+        String email = _usernameController.text; // Get the email value
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainPage(), // Pass the email value
+          ),
+        );
+      } else {
+        // User credentials are invalid, display an error message
+        print('Invalid username or password');
+      }
+    } catch (e) {
+      // Error occurred while connecting to the database
+      print('Error: $e');
+    } finally {
+      await conn.close();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -55,6 +99,7 @@ class _SignUpState extends State<SignUpPage> {
               child: Column(
                 children: [
                   TextField(
+                    controller: _usernameController, // Add this line
                     decoration: InputDecoration(
                       hintText: 'User Name',
                       border: OutlineInputBorder(
@@ -68,6 +113,7 @@ class _SignUpState extends State<SignUpPage> {
                     height: 23,
                   ),
                   TextField(
+                    controller: _passwordController,
                     decoration: InputDecoration(
                       hintText: 'Password',
                       border: OutlineInputBorder(
@@ -109,9 +155,7 @@ class _SignUpState extends State<SignUpPage> {
                       Container(
                         width: 150,
                         child: ElevatedButton(
-                          onPressed: () {
-                            // Button action
-                          },
+                          onPressed: _handleLogin, // Update this line
                           style: ElevatedButton.styleFrom(
                             primary: Colors.green,
                             shape: RoundedRectangleBorder(
