@@ -50,7 +50,6 @@ dev_dependencies:
   flutter_riverpod:
   firebase_storage:
   image_picker:
-  fluttertoast:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
