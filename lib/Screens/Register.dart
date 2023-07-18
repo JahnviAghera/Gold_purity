@@ -98,7 +98,7 @@ class _RegisterState extends State<RegisterPage> {
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
                     ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.justify,
                   ),
                 ),
               ),

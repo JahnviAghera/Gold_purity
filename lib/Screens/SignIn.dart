@@ -87,7 +87,8 @@ class _SignUpState extends State<SignUpPage> {
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
                     ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.justify
+                    ,
                   ),
                 ),
               ),

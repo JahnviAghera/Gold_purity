@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'Register.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage2 extends StatefulWidget {
   const RegisterPage2({Key? key}) : super(key: key);
@@ -36,13 +35,13 @@ class _RegisterState2 extends State<RegisterPage2> {
     }
   }
   void showCustomToast() {
-    Fluttertoast.showToast(
-      msg: 'An account with this email already exists.',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.grey[700],
-      textColor: Colors.white,
-    );
+    // Fluttertoast.showToast(
+    //   msg: 'An account with this email already exists.',
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.BOTTOM,
+    //   backgroundColor: Colors.grey[700],
+    //   textColor: Colors.white,
+    // );
   }
   void handleContinueButtonPressed() {
     String enteredEmail = email.text;
@@ -117,7 +116,7 @@ class _RegisterState2 extends State<RegisterPage2> {
                       fontSize: 10,
                       fontWeight: FontWeight.w400,
                     ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.justify,
                   ),
                 ),
               ),
