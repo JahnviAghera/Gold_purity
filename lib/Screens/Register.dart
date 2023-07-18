@@ -12,6 +12,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterState extends State<RegisterPage> {
+  bool showGSTNoField = false;
   final TextEditingController company = TextEditingController();
   final TextEditingController address_1 = TextEditingController();
   final TextEditingController address_2 = TextEditingController();
@@ -507,7 +508,11 @@ class _RegisterState extends State<RegisterPage> {
                                       children: [
                                         Container(
                                           child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              setState(() {
+                                                showGSTNoField = true;
+                                              });
+                                            },
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.green,
                                               shape: RoundedRectangleBorder(
@@ -526,7 +531,11 @@ class _RegisterState extends State<RegisterPage> {
                                         ),
                                         Container(
                                           child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              setState(() {
+                                                showGSTNoField = false;
+                                              });
+                                            },
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.green,
                                               shape: RoundedRectangleBorder(
@@ -550,37 +559,46 @@ class _RegisterState extends State<RegisterPage> {
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: 12,
+                          Visibility(
+                            visible: showGSTNoField,
+                            child: SizedBox(
+                              height: 12,
+                            ),
                           ),
                           Row(
                             children: [
-                              Container(
-                                width: 101,
-                                child: Text(
-                                  "GST No.",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
+                              Visibility(
+                                visible: showGSTNoField,
+                                child: Container(
+                                  width: 101,
+                                  child: Text(
+                                    "GST No.",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 250,
-                                height: 26,
-                                child: TextField(
-                                  controller: GST_no,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
+                              Visibility(
+                                visible: showGSTNoField,
+                                child: Container(
+                                  width: 250,
+                                  height: 26,
+                                  child: TextField(
+                                    controller: GST_no,
+                                    style: TextStyle(
+                                      fontSize: 15,
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5.0),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                                    ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           SizedBox(
