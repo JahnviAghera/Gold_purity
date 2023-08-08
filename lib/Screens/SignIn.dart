@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
 import 'Register.dart';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -9,7 +10,43 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUpPage> {
+  String email = "";
+  String password = "";
+  Future<void> signin() async {
 
+    final settings = ConnectionSettings(
+      /*host: '10.0.2.2',
+      port: 3306,
+      user: 'root',
+      db: 'gold_purity',*/
+      host: '107.180.34.197',
+      port: 3306,
+      user: 'Udhyog_Gold',
+      password: 'U4@2019',
+      db: 'gold_purity',
+    );
+
+    final conn = await MySqlConnection.connect(settings);
+
+    try {
+      final result = await conn.query(
+        'SELECT * FROM users WHERE email = ? AND password = ?', // Replace 'users' with your actual table name
+        [email, password],
+      );
+
+      if (result.isNotEmpty) {
+        // User with matching credentials found, login successful
+        print('Login successful!');
+      } else {
+        // User with given email and password not found
+        print('Invalid email or password. Please try again.');
+      }
+    } catch (e) {
+      print('Error during login: $e');
+    } finally {
+      await conn.close();
+    }
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -64,6 +101,11 @@ class _SignUpState extends State<SignUpPage> {
                       contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
                       prefixIcon: Icon(Icons.person_outlined)
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        email = value; // Update the pin variable when the value changes
+                      });
+                    },
                   ),
                   SizedBox(
                     height: 23,
@@ -77,6 +119,11 @@ class _SignUpState extends State<SignUpPage> {
                         contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
                         prefixIcon: Icon(Icons.lock)
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        password = value; // Update the pin variable when the value changes
+                      });
+                    },
                   ),
                   SizedBox(
                     height: 23,
@@ -110,7 +157,7 @@ class _SignUpState extends State<SignUpPage> {
                         width: 150,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Button action
+                            signin();
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.green, // Change the button color here

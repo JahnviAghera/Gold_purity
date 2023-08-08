@@ -140,7 +140,7 @@ packages:
     source: hosted
     version: "1.9.1"
   mysql1:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: mysql1
       sha256: "68aec7003d2abc85769bafa1777af3f4a390a90c31032b89636758ff8eb839e9"
